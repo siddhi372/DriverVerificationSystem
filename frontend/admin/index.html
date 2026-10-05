@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Driver Security Admin Portal</title>
+
+    <link rel="stylesheet" href="/static/admin/styles.css">
+</head>
+
+<body>
+
+<div id="toast"></div>
+
+<div id="app">
+
+
+    <!-- =====================================================
+         AUTHENTICATION PAGE
+         ===================================================== -->
+
+    <section id="auth-page" class="page">
+
+        <div class="auth-card">
+
+            <div class="logo">
+                DRIVER SECURITY
+            </div>
+
+            <h1>Admin Portal</h1>
+
+            <p class="subtitle">
+                AI-Based Driver Recognition & Authentication
+            </p>
+
+
+            <!-- AUTH TABS -->
+
+            <div class="auth-tabs">
+
+                <button
+                    id="login-tab"
+                    class="auth-tab active"
+                    type="button"
+                    onclick="showLogin()">
+
+                    Login
+
+                </button>
+
+
+                <button
+                    id="register-tab"
+                    class="auth-tab"
+                    type="button"
+                    onclick="showRegister()">
+
+                    Register
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 LOGIN FORM
+                 ================================================= -->
+
+            <form id="login-form">
+
+                <div class="form-group">
+
+                    <label for="login-admin-id">
+                        Admin ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="login-admin-id"
+                        placeholder="Enter Admin ID"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="login-password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="login-password"
+                        placeholder="Enter Password"
+                        required>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    LOGIN
+
+                </button>
+
+            </form>
+
+
+            <!-- =================================================
+                 REGISTER FORM
+                 ================================================= -->
+
+            <form
+                id="register-form"
+                class="hidden">
+
+                <div class="form-group">
+
+                    <label for="register-admin-id">
+                        Admin ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="register-admin-id"
+                        placeholder="Create Admin ID"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="register-name">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="register-name"
+                        placeholder="Enter your name"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="register-password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="register-password"
+                        placeholder="Create Password"
+                        minlength="6"
+                        required>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    CREATE ACCOUNT
+
+                </button>
+
+            </form>
+
+
+            <p id="auth-message"></p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         DASHBOARD PAGE
+         ===================================================== -->
+
+    <section
+        id="dashboard-page"
+        class="page hidden">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    DRIVER SECURITY ADMIN PORTAL
+                </h1>
+
+                <p>
+                    AI Driver Verification System
+                </p>
+
+            </div>
+
+
+            <div class="admin-section">
+
+                <span id="admin-name">
+                    Administrator
+                </span>
+
+                <button
+                    class="logout-btn"
+                    type="button"
+                    onclick="logout()">
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             DASHBOARD BODY
+             ================================================= -->
+
+        <main class="dashboard">
+
+
+            <!-- SIDEBAR -->
+
+            <aside class="sidebar">
+
+                <button
+                    type="button"
+                    onclick="showSection('overview')">
+
+                    Dashboard
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="showSection('drivers')">
+
+                    Drivers
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="showSection('vehicles')">
+
+                    Vehicles
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="showSection('verification')">
+
+                    Verification
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="showSection('history')">
+
+                    History
+
+                </button>
+
+            </aside>
+
+
+
+            <!-- =================================================
+                 CONTENT
+                 ================================================= -->
+
+            <section class="content">
+
+
+                <!-- =================================================
+                     OVERVIEW
+                     ================================================= -->
+
+                <div
+                    id="overview-section"
+                    class="dashboard-section">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <h2>
+                                System Overview
+                            </h2>
+
+                            <p>
+                                Monitor the driver verification system.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stats-grid">
+
+
+                        <div class="stat-card">
+
+                            <span>
+                                Total Drivers
+                            </span>
+
+                            <strong id="total-drivers">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat-card">
+
+                            <span>
+                                Verified
+                            </span>
+
+                            <strong id="verified-drivers">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat-card">
+
+                            <span>
+                                Failed Attempts
+                            </span>
+
+                            <strong id="failed-verifications">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat-card">
+
+                            <span>
+                                Active Vehicles
+                            </span>
+
+                            <strong id="active-vehicles">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <h3>
+                            Recent Verification Activity
+                        </h3>
+
+                        <div id="recent-activity">
+
+                            No verification activity yet.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     DRIVERS
+                     ================================================= -->
+
+                <div
+                    id="drivers-section"
+                    class="dashboard-section hidden">
+
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <h2>
+                                Registered Drivers
+                            </h2>
+
+                            <p>
+                                Manage authorized drivers.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="primary-btn"
+                            onclick="openDriverModal()">
+
+                            + Register Driver
+
+                        </button>
+
+                    </div>
+
+
+                    <div id="drivers-list">
+
+                        Loading drivers...
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     VEHICLES
+                     ================================================= -->
+
+                <div
+                    id="vehicles-section"
+                    class="dashboard-section hidden">
+
+                    <h2>
+                        Vehicles / Client Sites
+                    </h2>
+
+                    <p>
+                        Monitor connected vehicle systems.
+                    </p>
+
+
+                    <div id="vehicles-list">
+
+                        Loading vehicles...
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     VERIFICATION
+                     ================================================= -->
+
+                <div
+                    id="verification-section"
+                    class="dashboard-section hidden">
+
+                    <h2>
+                        Latest Verification
+                    </h2>
+
+
+                    <div
+                        id="latest-verification"
+                        class="panel">
+
+                        <div class="verification-status">
+
+                            WAITING FOR VERIFICATION
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     HISTORY
+                     ================================================= -->
+
+                <div
+                    id="history-section"
+                    class="dashboard-section hidden">
+
+                    <h2>
+                        Verification History
+                    </h2>
+
+
+                    <div id="history-list">
+
+                        Loading history...
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         DRIVER REGISTRATION MODAL
+         ===================================================== -->
+
+    <div
+        id="driver-modal"
+        class="modal hidden">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <h2>
+                    Register Driver
+                </h2>
+
+
+                <button
+                    type="button"
+                    onclick="closeDriverModal()">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+
+            <form id="driver-form">
+
+
+                <div class="form-group">
+
+                    <label for="driver-id">
+                        Driver ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="driver-id"
+                        name="driver_id"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="driver-name">
+                        Driver Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="driver-name"
+                        name="name"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="driver-age">
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        id="driver-age"
+                        name="age"
+                        min="18"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="driver-address">
+                        Address
+                    </label>
+
+                    <textarea
+                        id="driver-address"
+                        name="address"
+                        rows="3"></textarea>
+
+                </div>
+
+
+                <h3>
+                    Face Enrollment
+                </h3>
+
+
+                <video
+                    id="webcam"
+                    autoplay
+                    playsinline>
+                </video>
+
+
+                <canvas
+                    id="capture-canvas"
+                    style="display:none;">
+                </canvas>
+
+
+                <div class="camera-controls">
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        onclick="startCamera()">
+
+                        Start Webcam
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        onclick="captureFace()">
+
+                        Capture Face
+
+                    </button>
+
+                </div>
+
+
+                <p id="capture-status">
+
+                    Camera not started.
+
+                </p>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    REGISTER DRIVER
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script src="/static/admin/app.js"></script>
+
+</body>
+
+</html>
